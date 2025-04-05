@@ -38,6 +38,13 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
+          resources:  # Add this section
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
           envFrom:
             - configMapRef:
                 name: url-shortener-config
@@ -76,6 +83,13 @@ spec:
           image: redis:alpine
           ports:
             - containerPort: 6379
+          resources:  # Optionally add resources for Redis too
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
 ---
 apiVersion: v1
 kind: Service
