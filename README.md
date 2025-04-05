@@ -2,6 +2,7 @@
 
 # week 1->
 (make sure redis is running) 
+
 docker-compose up --build
 
 docker build -t flask-redis-app .
