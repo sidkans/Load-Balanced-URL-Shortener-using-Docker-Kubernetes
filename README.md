@@ -20,6 +20,7 @@ kubectl get pods
 
 # week 3->
 (only task 1 done so far)
+
 minikube addons enable metrics-server
 
 kubectl apply -f hpa.yaml
