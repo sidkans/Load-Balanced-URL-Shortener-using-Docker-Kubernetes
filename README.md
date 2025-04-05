@@ -1,5 +1,5 @@
 # Commands to execute ->
-
+(All the commands have been tested in powershell)
 # week 1->
 (make sure redis is running) 
 
@@ -15,4 +15,19 @@ Invoke-RestMethod -Uri "http://localhost:5000/shorten" -Method Post -Headers @{"
 (make sure minikube is running) 
 
 kubectl apply -f deployments.yaml
+
+kubectl get pods
+
+# week 3->
+(only task 1 done so far)
+minikube addons enable metrics-server
+
+kubectl apply -f hpa.yaml
+
+kubectl get hpa
+
+kubectl describe hpa url-shortener-hpa
+
+
+
 
