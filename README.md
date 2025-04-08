@@ -29,6 +29,13 @@ kubectl get hpa
 
 kubectl describe hpa url-shortener-hpa
 
+minikube addons enable ingress
+
+kubectl apply -f ingress.yaml
+
+kubectl get ingress
+
+
 
 
 
