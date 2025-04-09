@@ -51,3 +51,9 @@ minikube addons enable ingress
 kubectl apply -f ingress.yaml
 
 kubectl get ingress
+
+## For monitoring:
+
+kubectl logs -f -l app=url-shortener
+
+kubectl top pods
