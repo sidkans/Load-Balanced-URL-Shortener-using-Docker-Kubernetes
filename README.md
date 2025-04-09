@@ -38,8 +38,6 @@ Invoke-RestMethod -Uri "<BASE_URL>" -Method Post -Headers @{"Content-Type"="appl
 
 # week 3->
 
-(only task 1 done so far)
-
 minikube addons enable metrics-server
 
 kubectl apply -f hpa.yaml
