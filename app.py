@@ -79,6 +79,10 @@ def validate_url(url):
     parsed_url = urlparse(url)
     return bool(parsed_url.scheme and parsed_url.netloc)
 
+@app.route('/')
+def index():
+    return ("The service is working. To use the URL shortener use /shorten along with <BASE_URL>")
+
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint for Kubernetes"""

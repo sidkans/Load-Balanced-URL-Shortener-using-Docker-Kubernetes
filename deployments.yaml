@@ -6,7 +6,7 @@ metadata:
 data:
   REDIS_HOST: "redis-service"
   REDIS_PORT: "6379"
-  BASE_URL: "http://127.0.0.1:51832" # adjust as needed
+  BASE_URL: "http://127.0.0.1:64532" # adjust as needed
   SHORT_CODE_LENGTH: "6"
   REDIS_MAX_RETRIES: "5"
 ---
@@ -38,7 +38,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000
-          resources:  
+          resources:
             requests:
               cpu: "100m"
               memory: "128Mi"
@@ -83,7 +83,7 @@ spec:
           image: redis:alpine
           ports:
             - containerPort: 6379
-          resources:  # Optionally add resources for Redis too
+          resources: # Optionally add resources for Redis too
             requests:
               cpu: "50m"
               memory: "64Mi"
