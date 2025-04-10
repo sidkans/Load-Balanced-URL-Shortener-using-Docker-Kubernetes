@@ -21,20 +21,11 @@ Invoke-RestMethod -Uri "http://localhost:5000/shorten" -Method Post -Headers @{"
 kubectl apply -f deployments.yaml
 
 kubectl get pods
+kubectl get svc
 
-minikube service url-shortener-service --url
+minikube tunnel
 
-## Now we have to take the URL given in terminal and change the BASE_URL in deployments.yaml to use that URL.
-
-## followed by this in a new terminal while keeping the tunnel open on the previous terminal:
-
-kubectl apply -f deployments.yaml
-
-kubectl rollout restart deployment url-shortener
-
-Invoke-RestMethod -Uri "<BASE_URL>" -Method Post -Headers @{"Content-Type"="application/json"} -Body ('{"long_url": "https://example.com"}')
-
-## Note: In the Invoke-RestMethod command, we have to manually put the BASE_URL which we have set in the yaml file as well.
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/shorten" -Method Post -Headers @{"Content-Type"="application/json"} -Body ('{"long_url": "https://example.com"}')
 
 # week 3->
 
@@ -53,6 +44,8 @@ kubectl apply -f ingress.yaml
 kubectl get ingress
 
 ## For monitoring:
+
+kubectl logs -f <podname>
 
 kubectl logs -f -l app=url-shortener
 

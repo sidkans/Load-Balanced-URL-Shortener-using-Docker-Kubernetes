@@ -1,23 +1,4 @@
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: url-shortener-config
-data:
-  REDIS_HOST: "redis-service"
-  REDIS_PORT: "6379"
-  BASE_URL: "http://127.0.0.1:65355" # adjust as needed
-  SHORT_CODE_LENGTH: "6"
-  REDIS_MAX_RETRIES: "5"
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: url-shortener-secrets
-type: Opaque
-stringData:
-  REDIS_PASSWORD: ""
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,7 +16,7 @@ spec:
       containers:
         - name: url-shortener
           image: flask-redis-app:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
           resources:
@@ -45,23 +26,17 @@ spec:
             limits:
               cpu: "500m"
               memory: "256Mi"
-          envFrom:
-            - configMapRef:
-                name: url-shortener-config
-            - secretRef:
-                name: url-shortener-secrets
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: url-shortener-service
 spec:
-  type: LoadBalancer # Change to NodePort if LoadBalancer is not available
+  type: LoadBalancer
   selector:
     app: url-shortener
   ports:
-    - protocol: TCP
-      port: 5000
+    - port: 5000
       targetPort: 5000
 ---
 apiVersion: apps/v1
@@ -83,7 +58,7 @@ spec:
           image: redis:alpine
           ports:
             - containerPort: 6379
-          resources: # Optionally add resources for Redis too
+          resources:
             requests:
               cpu: "50m"
               memory: "64Mi"
