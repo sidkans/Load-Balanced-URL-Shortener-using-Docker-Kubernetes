@@ -168,30 +168,6 @@ def redirect_url(short_code):
         logger.error(f"Error in redirect_url: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
-@app.route('/stats/<short_code>', methods=['GET'])
-def get_stats(short_code):
-    """Get statistics for a shortened URL"""
-    try:
-        # Check if Redis is available
-        redis_available = is_redis_available()
-        
-        # Get the long URL
-        if redis_available:
-            long_url = redis_client.hget("short_codes", short_code)
-        else:
-            long_url = short_codes.get(short_code)
-        
-        if not long_url:
-            return jsonify({"error": "Short URL not found"}), 404
-        
-        return jsonify({
-            "short_code": short_code,
-            "original_url": long_url,
-            "short_url": f"{BASE_URL}/{short_code}"
-        })
-    except Exception as e:
-        logger.error(f"Error in get_stats: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
