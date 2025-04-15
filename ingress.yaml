@@ -16,4 +16,4 @@ spec:
           service:
             name: url-shortener-service
             port:
-              number: 80
+              number: 5000 # changed from 80

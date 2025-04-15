@@ -8,9 +8,7 @@
 
 docker-compose up --build
 
-docker build -t flask-redis-app .
 
-docker run -p 5000:5000 --name flask-app flask-redis-app
 
 Invoke-RestMethod -Uri "http://localhost:5000/" -Method Get
 
@@ -56,3 +54,36 @@ kubectl logs -f <podname>
 kubectl logs -f -l app=url-shortener
 
 kubectl top pods
+
+
+## Load Testing:
+
+# 1. Install Apache Benchmark
+choco install apache-httpd
+
+# 2. Create test payload file
+@{
+    "long_url" = "https://www.example.com/very/long/url"
+} | ConvertTo-Json | Out-File -FilePath payload.json
+
+# 3. Open separate terminals for monitoring during load test
+# Terminal 1 - Watch pod scaling:
+kubectl get pods -w
+
+# Terminal 2 - Monitor HPA:
+kubectl get hpa -w
+
+# Terminal 3 - Watch resource usage:
+kubectl top pods
+
+# 4. Run load tests
+# Test GET endpoint (1000 requests, 100 concurrent)
+ab -n 1000 -c 100 http://url-shortener.local/
+
+# Test POST endpoint for URL shortening
+ab -n 1000 -c 100 -p payload.json -T application/json http://url-shortener.local/shorten
+
+# 5. Check results
+kubectl describe hpa url-shortener-hpa
+kubectl get pods
+kubectl top pods
