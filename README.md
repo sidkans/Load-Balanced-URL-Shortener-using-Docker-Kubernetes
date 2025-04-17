@@ -29,7 +29,7 @@ kubectl get svc
 
 minikube tunnel
 
-Invoke-RestMethod -Uri "http://127.0.0.1:5000/shorten" -Method Post -Headers @{"Content-Type"="application/json"} -Body ('{"long_url": "https://example.com"}')
+Invoke-RestMethod -Uri "http://url-shortener.local/shorten" -Method Post -Headers @{"Content-Type"="application/json"} -Body ('{"long_url": "https://example.com"}')
 
 # week 3->
 
