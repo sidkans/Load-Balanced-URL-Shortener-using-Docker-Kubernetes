@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: url-shortener
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: url-shortener
@@ -33,11 +33,22 @@ spec:
               memory: "256Mi"
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: url-shortener-config
+data:
+  BASE_URL: "http://url-shortener.local"
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+  DEBUG: "true"
+---
+
+apiVersion: v1
 kind: Service
 metadata:
   name: url-shortener-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: url-shortener
   ports:
@@ -85,3 +96,4 @@ spec:
     - protocol: TCP
       port: 6379
       targetPort: 6379
+
