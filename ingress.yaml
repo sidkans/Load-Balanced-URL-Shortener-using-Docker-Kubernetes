@@ -6,6 +6,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: "nginx"
 spec:
+  ingressClassName: nginx
   rules:
   - host: url-shortener.local  # You can use a real domain in production
     http:
